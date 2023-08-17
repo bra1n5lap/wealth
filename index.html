@@ -1,1 +1,57 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wealth By Brainslap</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Wealth by Brainslap" />
+  <link rel="icon" href="favicon.png">
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="Wealth by Brainslap" />
+  <meta property="og:image" content="" />
+  <meta name="twitter:card" content="" />
+  <meta name="twitter:site" content="" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="" />
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<h1>Wealth</h1> by Brainslap!
+<hr>
+
+
+
+
+
+
+
+<script>
+
+var url = "https://query1.finance.yahoo.com/v8/finance/chart/IRCTC.NS?period1=1660726173&period2=1692262173&interval=1wk&events=history&includeAdjustedClose=true";
+
+var add = "https://proxy.cors.sh/";
+
+add = "https://corsproxy.io/?";
+
+var final = add + url;
+
+/* const response = fetch(final); */
+
+/* console.log(response.json); */
+
+async function logMovies(url) {
+  const response = await fetch(url);
+  const movies = await response.json();
+  console.log(movies);
+}
+
+/* logMovies(final); */
+
+</script>
+
+
+
+</body>
+</html>
