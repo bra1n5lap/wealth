@@ -21,7 +21,19 @@
 <h1>Wealth</h1> by Brainslap!
 <hr>
 
+<input type="text" id="stock_name">
+<br>
+<input type="date" id="from_date" name="from_date">
+<input type="date" id="to_date" name="to_date">
 
+<br>
+<br>
+<input type="submit" onclick="logMovies();">
+
+
+<div id="result">
+
+</div>
 
 
 
@@ -29,24 +41,45 @@
 
 <script>
 
+var stocks = ['IRCTC.NS', 'TCS.NS'];
+
+
 var url = "https://query1.finance.yahoo.com/v8/finance/chart/IRCTC.NS?period1=1660726173&period2=1692262173&interval=1wk&events=history&includeAdjustedClose=true";
-
 var add = "https://proxy.cors.sh/";
-
 add = "https://corsproxy.io/?";
 
 var final = add + url;
-
 /* const response = fetch(final); */
-
 /* console.log(response.json); */
 
-async function logMovies(url) {
-  const response = await fetch(url);
-  const movies = await response.json();
-  console.log(movies);
-}
 
+async function logMovies() {
+
+  var stock_name = document.getElementById("stock_name").value;
+
+  var from_date = new Date(document.getElementById("from_date").value).getTime() / 1000;
+  var to_date = new Date(document.getElementById("to_date").value).getTime() / 1000;
+
+  var cors_proxy = "https://corsproxy.io/?";
+
+  var api_url = "https://query1.finance.yahoo.com/v8/finance/chart/$stock_name$?period1=$from_date$&period2=$to_date$&interval=1wk&events=history&includeAdjustedClose=true";
+
+
+  api_url = api_url.replace("$stock_name$", stock_name);
+  api_url = api_url.replace("$from_date$", from_date);
+  api_url = api_url.replace("$to_date$", to_date);
+
+  var final_url = cors_proxy + api_url;
+
+  /*  console.log(final_url); */
+
+  const response = await fetch(final_url);
+  const stock_price = await response.json();
+  /*  console.log(stock_price); */
+  document.getElementById("result").innerText = JSON.stringify(stock_price);
+  /*   console.log(from_date);
+    console.log(to_date); */
+}
 /* logMovies(final); */
 
 </script>
