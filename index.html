@@ -16,20 +16,44 @@
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
   <link rel="manifest" href="manifest.webmanifest">
+
+
+<link href="https://cdn.jsdelivr.net/gh/tofsjonas/sortable@latest/sortable.min.css" rel="stylesheet" />
+
+
 </head>
+
 <body>
 <h1>Wealth</h1> by Brainslap!
 <hr>
 
-<input type="text" id="stock_name">
+
 <input type="date" id="from_date" name="from_date">
 <input type="date" id="to_date" name="to_date">
 <br>
 <br>
 <input type="submit" onclick="all_stocks(stocks);">
-<div id="result">
+<br>
+<br>
 
-</div>
+<!-- <input type="button" text="Sort Table" onclick="table_sort();"> -->
+
+
+<!-- <div id="result">
+</div> -->
+
+<table class='sortable'>
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Pattern</th>
+      <th>Magnitude</th>
+    </tr>
+  </thead>
+  <tbody id='result'>
+
+  </tbody>
+</table>
 
 
 
@@ -37,7 +61,6 @@
 
 <script>
 
-var stocks = ['IRCTC.NS', 'TCS.NS', 'SBIN.NS'];
 var url = "https://query1.finance.yahoo.com/v8/finance/chart/IRCTC.NS?period1=1660726173&period2=1692262173&interval=1wk&events=history&includeAdjustedClose=true";
 var add = "https://proxy.cors.sh/";
 add = "https://corsproxy.io/?";
@@ -76,9 +99,15 @@ async function logMovies(stock) {
 
   var magnitude = ((close1 - open1) / open1) * ((close2 - open2) / open2);
 
+  var pattern = 'Other';
+
+  if ((close1 - open1) < 0 && (close2 - open2) > 0) {
+    pattern = 'Low then High';
+  }
+
   /* console.log(open1, close1, open2, close2, magnitude); */
 
-  document.getElementById("result").innerHTML += stock_name + ' : ' + magnitude + '<br>';
+  document.getElementById("result").innerHTML += '<tr><td>' + stock_name + '</td><td>' + pattern + '</td><td>' + magnitude + '</td></tr>';
 
   /*   console.log(from_date);
     console.log(to_date); */
@@ -94,12 +123,49 @@ function all_stocks(arr) {
 
 }
 
-/* logMovies(final); */
 
+
+
+var stocks = ['IRCTC.NS', 'ASIANPAINT.NS',
+  'AXISBANK.NS',
+  'BAJAJFINSV.NS',
+  'BAJFINANCE.NS',
+  'BHARTIARTL.NS',
+  'HCLTECH.NS',
+  'HDFCBANK.NS',
+  'HINDUNILVR.NS',
+  'ICICIBANK.NS',
+  'INDUSINDBK.NS',
+  'INFY.NS',
+  'ITC.NS',
+  'JSWSTEEL.NS',
+  'KOTAKBANK.NS',
+  'LT.NS',
+  'M&M.NS',
+  'MARUTI.NS',
+  'NESTLEIND.NS',
+  'NTPC.NS',
+  'POWERGRID.NS',
+  'RELIANCE.NS',
+  'SBIN.NS',
+  'SUNPHARMA.NS',
+  'TATAMOTORS.NS',
+  'TATASTEEL.NS',
+  'TCS.NS',
+  'TECHM.NS',
+  'TITAN.NS',
+  'ULTRACEMCO.NS',
+  'WIPRO.NS'
+
+];
+
+
+
+/* logMovies(final); */
 
 </script>
 
-
+<script src="https://cdn.jsdelivr.net/gh/tofsjonas/sortable@latest/sortable.min.js"></script>
 
 </body>
 </html>
