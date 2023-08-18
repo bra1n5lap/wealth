@@ -22,15 +22,11 @@
 <hr>
 
 <input type="text" id="stock_name">
-<br>
 <input type="date" id="from_date" name="from_date">
 <input type="date" id="to_date" name="to_date">
-
 <br>
 <br>
-<input type="submit" onclick="logMovies();">
-
-
+<input type="submit" onclick="all_stocks(stocks);">
 <div id="result">
 
 </div>
@@ -41,46 +37,65 @@
 
 <script>
 
-var stocks = ['IRCTC.NS', 'TCS.NS'];
-
-
+var stocks = ['IRCTC.NS', 'TCS.NS', 'SBIN.NS'];
 var url = "https://query1.finance.yahoo.com/v8/finance/chart/IRCTC.NS?period1=1660726173&period2=1692262173&interval=1wk&events=history&includeAdjustedClose=true";
 var add = "https://proxy.cors.sh/";
 add = "https://corsproxy.io/?";
-
 var final = add + url;
 /* const response = fetch(final); */
 /* console.log(response.json); */
+async function logMovies(stock) {
+  /*  var stock_name = document.getElementById("stock_name").value; */
 
-
-async function logMovies() {
-
-  var stock_name = document.getElementById("stock_name").value;
+  var stock_name = stock;
 
   var from_date = new Date(document.getElementById("from_date").value).getTime() / 1000;
   var to_date = new Date(document.getElementById("to_date").value).getTime() / 1000;
-
   var cors_proxy = "https://corsproxy.io/?";
-
   var api_url = "https://query1.finance.yahoo.com/v8/finance/chart/$stock_name$?period1=$from_date$&period2=$to_date$&interval=1wk&events=history&includeAdjustedClose=true";
-
-
   api_url = api_url.replace("$stock_name$", stock_name);
   api_url = api_url.replace("$from_date$", from_date);
   api_url = api_url.replace("$to_date$", to_date);
-
   var final_url = cors_proxy + api_url;
-
   /*  console.log(final_url); */
-
   const response = await fetch(final_url);
   const stock_price = await response.json();
   /*  console.log(stock_price); */
-  document.getElementById("result").innerText = JSON.stringify(stock_price);
+  /*   document.getElementById("result").innerText = JSON.stringify(stock_price); */
+
+  var stock_open = stock_price.chart.result[0].indicators.quote[0].open;
+  var stock_close = stock_price.chart.result[0].indicators.quote[0].close;
+  /*  console.log(stock_open);
+   console.log(stock_close);
+    */
+  var open1 = stock_open[0];
+  var close1 = stock_close[stock_close.length - 2];
+
+  var open2 = close1;
+  var close2 = stock_close[stock_close.length - 1];
+
+  var magnitude = ((close1 - open1) / open1) * ((close2 - open2) / open2);
+
+  /* console.log(open1, close1, open2, close2, magnitude); */
+
+  document.getElementById("result").innerHTML += stock_name + ' : ' + magnitude + '<br>';
+
   /*   console.log(from_date);
     console.log(to_date); */
 }
+
+function all_stocks(arr) {
+  var s = arr;
+
+  for (i = 0; i < s.length; i++) {
+    logMovies(s[i]);
+  }
+
+
+}
+
 /* logMovies(final); */
+
 
 </script>
 
