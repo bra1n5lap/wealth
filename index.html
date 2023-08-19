@@ -47,7 +47,11 @@
     <tr>
       <th>Stock</th>
       <th>Pattern</th>
-      <th>Return</th>
+      <th>Overall Return</th>
+      <th>Max return in last x weeks</th>
+      <th>Max return was</th>
+      <th>Min return in last x weeks</th>
+      <th>Min return was</th>
       <th>Magnitude</th>
     </tr>
   </thead>
@@ -62,6 +66,30 @@
 
 <script>
 
+function min_max_return(arr) {
+  var price = arr;
+  var base = price[price.length - 1];
+  var returns = [];
+  for (i = 0; i < price.length; i++) {
+    var r = (base - close[i]) / close[i];
+    returns.push(r);
+  }
+
+  returns = returns.reverse();
+
+  const max_val = Math.max(...returns);
+  const min_val = Math.min(...returns);
+  const max_index = returns.indexOf(max_val);
+  const min_index = returns.indexOf(min_val);
+
+  /* console.log(returns,max_val,min_val,max_index,min_index); */
+
+  return [max_index, max_val, min_index, min_val];
+}
+
+
+
+  
 var url = "https://query1.finance.yahoo.com/v8/finance/chart/IRCTC.NS?period1=1660726173&period2=1692262173&interval=1wk&events=history&includeAdjustedClose=true";
 var add = "https://proxy.cors.sh/";
 add = "https://corsproxy.io/?";
@@ -89,6 +117,9 @@ async function logMovies(stock) {
 
   var stock_open = stock_price.chart.result[0].indicators.quote[0].open;
   var stock_close = stock_price.chart.result[0].indicators.quote[0].close;
+
+  return_pattern = min_max_return(stock_close);
+  
   /*  console.log(stock_open);
    console.log(stock_close);
     */
@@ -111,7 +142,7 @@ async function logMovies(stock) {
   /* console.log(open1, close1, open2, close2, magnitude); */
 
  
-  document.getElementById("result").innerHTML += '<tr><td><a target=\'_blank\' href=\'https://google.com/search?q='+ stock_name.replace('.NS','') +'+stock+price\' >' + stock_name + '</a></td><td>' + pattern + '</td><td>' + normal_return + '</td><td>' + magnitude + '</td></tr>';
+  document.getElementById("result").innerHTML += '<tr><td><a target=\'_blank\' href=\'https://google.com/search?q='+ stock_name.replace('.NS','') +'+stock+price\' >' + stock_name + '</a></td><td>' + pattern + '</td><td>' + normal_return + '</td><td>'+return_pattern[0]+'</td><td>'+return_pattern[1]+'</td><td>'+return_pattern[2]+'</td><td>'+return_pattern[3]+'</td><td>' + magnitude + '</td></tr>';
   
   
   /*   console.log(from_date);
