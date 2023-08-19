@@ -74,13 +74,14 @@ function min_max_return(arr) {
     var r = (base - price[i]) / price[i];
     returns.push(r);
   }
+  returns.pop();
 
   returns = returns.reverse();
 
   const max_val = Math.max(...returns);
   const min_val = Math.min(...returns);
-  const max_index = returns.indexOf(max_val);
-  const min_index = returns.indexOf(min_val);
+  const max_index = returns.indexOf(max_val)+1;
+  const min_index = returns.indexOf(min_val)+1;
 
   /* console.log(returns,max_val,min_val,max_index,min_index); */
 
