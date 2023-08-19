@@ -71,7 +71,7 @@ function min_max_return(arr) {
   var base = price[price.length - 1];
   var returns = [];
   for (i = 0; i < price.length; i++) {
-    var r = (base - price[i]) / price[i];
+    var r = (base - price[i])*100 / price[i];
     returns.push(r);
   }
   returns.pop();
