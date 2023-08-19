@@ -111,7 +111,9 @@ async function logMovies(stock) {
   /* console.log(open1, close1, open2, close2, magnitude); */
 
  
-  document.getElementById("result").innerHTML += '<tr><td><a href=\'https://google.com/search?q='+ stock_name.replace('.NS','') +'+stock+price\' >' + stock_name + '</a></td><td>' + pattern + '</td><td>' + normal_return + '</td><td>' + magnitude + '</td></tr>';
+  document.getElementById("result").innerHTML += '<tr><td><a target=\'_blank\' href=\'https://google.com/search?q='+ stock_name.replace('.NS','') +'+stock+price\' >' + stock_name + '</a></td><td>' + pattern + '</td><td>' + normal_return + '</td><td>' + magnitude + '</td></tr>';
+  
+  
   /*   console.log(from_date);
     console.log(to_date); */
 }
