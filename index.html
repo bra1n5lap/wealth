@@ -52,7 +52,7 @@
       <th>Max return was</th>
       <th>Min return in last x weeks</th>
       <th>Min return was</th>
-      <th>Magnitude</th>
+      <th>Buy Metric</th>
     </tr>
   </thead>
   <tbody id='result'>
@@ -119,7 +119,7 @@ async function logMovies(stock) {
   var stock_open = stock_price.chart.result[0].indicators.quote[0].open;
   var stock_close = stock_price.chart.result[0].indicators.quote[0].close;
 
-  return_pattern = min_max_return(stock_close);
+  var return_pattern = min_max_return(stock_close);
   
   /*  console.log(stock_open);
    console.log(stock_close);
@@ -130,7 +130,9 @@ async function logMovies(stock) {
   var open2 = close1;
   var close2 = stock_close[stock_close.length - 1];
 
-  var magnitude = ((close1 - open1) / open1) * ((close2 - open2) / open2);
+  // var magnitude = ((close1 - open1) / open1) * ((close2 - open2) / open2);
+
+  var magnitude = return_pattern[1]*return_pattern[2]*return_pattern[3]/return_pattern[0] ;
 
   var normal_return = (close2 - open1)*100/open1;
 
